@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — see docs/03-design-system.md.
+ * `muted` is #5A6D75 (slightly darker than the spec's #647780) so small text
+ * passes WCAG AA on both white and mint backgrounds.
+ */
+@theme {
+  --color-primary: #087f8c;
+  --color-primary-deep: #07545b;
+  --color-primary-deeper: #053e43;
+  --color-mint: #eaf7f5;
+  --color-mint-strong: #d3ede9;
+  --color-background: #fcfdfd;
+  --color-surface: #ffffff;
+  --color-ink: #17313a;
+  --color-muted: #5a6d75;
+  --color-border: #dce8e9;
+  --color-accent-blue: #e7f2ff;
+
+  --color-success: #1e6b47;
+  --color-success-bg: #ecf8f1;
+  --color-error: #b42318;
+  --color-error-bg: #fef3f2;
+  --color-warning: #8a4b00;
+  --color-warning-bg: #fff6e5;
+
+  --radius-card: 1.25rem;
+  --radius-image: 1.75rem;
+  --radius-button: 0.75rem;
+
+  --shadow-soft: 0 1px 2px rgb(7 84 91 / 0.04), 0 8px 24px -12px rgb(7 84 91 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(7 84 91 / 0.05), 0 18px 40px -18px rgb(7 84 91 / 0.28);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-fade-up: fade-up 0.6s var(--ease-out-soft) both;
+  --animate-fade-in: fade-in 0.6s var(--ease-out-soft) both;
+  --animate-scale-in: scale-in 0.8s var(--ease-out-soft) both;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-draw: draw 1.6s var(--ease-out-soft) both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(1.03);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+@theme inline {
+  --font-heading: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+@utility container-site {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility section-y {
+  padding-block: 4rem;
+  @media (width >= 64rem) {
+    padding-block: 6.5rem;
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary-deep);
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    color: var(--color-primary-deep);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background-color: var(--color-mint-strong);
+    color: var(--color-primary-deeper);
+  }
+
+  /* Tooth / smile line drawings use pathLength="1" so the draw animation is length-independent. */
+  .line-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
